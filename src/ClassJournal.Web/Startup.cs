@@ -25,7 +25,8 @@ namespace ClassJournal.Web
             var serverVersion = new MySqlServerVersion(new Version(8,0));
 
             services.AddDbContext<DatabaseContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), serverVersion));
+                options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), serverVersion,
+                    config => { config.MigrationsAssembly("ClassJournal.DataAccess");}));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
