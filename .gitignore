@@ -372,6 +372,8 @@ MigrationBackup/
 **/.idea/**/*.iml
 **/.idea/**/contentModel.xml
 **/.idea/**/modules.xml
+src/.idea/
+*/src/.idea/
 
 *.suo
 *.user
