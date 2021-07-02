@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
         <PackageReference Include="FluentValidation" Version="10.2.3" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.7" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.7">
@@ -16,6 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ClassJournal.BusinessLogic\ClassJournal.BusinessLogic.csproj" />
       <ProjectReference Include="..\ClassJournal.DataAccess\ClassJournal.DataAccess.csproj" />
     </ItemGroup>
 

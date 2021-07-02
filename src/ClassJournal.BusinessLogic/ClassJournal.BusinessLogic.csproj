@@ -4,4 +4,15 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="10.1.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ClassJournal.DataAccess\ClassJournal.DataAccess.csproj" />
+      <ProjectReference Include="..\ClassJournal.Domain\ClassJournal.Domain.csproj" />
+      <ProjectReference Include="..\ClassJournal.Dto\ClassJournal.Dto.csproj" />
+      <ProjectReference Include="..\ClassJournal.Shared\ClassJournal.Shared.csproj" />
+    </ItemGroup>
+
 </Project>

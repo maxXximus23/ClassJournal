@@ -1,5 +1,11 @@
 using System;
+using System.Reflection;
+using ClassJournal.BusinessLogic.Mapping;
+using ClassJournal.BusinessLogic.Services;
+using ClassJournal.BusinessLogic.Services.Contracts;
 using ClassJournal.DataAccess;
+using ClassJournal.DataAccess.Repositories;
+using ClassJournal.DataAccess.Repositories.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +22,7 @@ namespace ClassJournal.Web
         {
             Configuration = configuration;
         }
-
+        
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -27,6 +33,18 @@ namespace ClassJournal.Web
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), serverVersion,
                     config => { config.MigrationsAssembly("ClassJournal.DataAccess");}));
+
+            services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<IAdminService, AdminService>();
+            services.AddAutoMapper(config => config.AddMaps(typeof(BusinessLogic.Mapping.UsersProfile).Assembly,
+                typeof(Web.Mapping.UserProfile).Assembly));
+            
+            // Configure JWT authentication.
+            /*services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearerConfiguration(
+                    Configuration["Jwt:Issuer"],
+                    Configuration["Jwt:Audience"]
+                );*/
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
