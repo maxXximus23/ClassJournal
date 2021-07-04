@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using AutoMapper;
 using ClassJournal.BusinessLogic.Mapping;
@@ -31,6 +33,25 @@ namespace ClassJournal.BusinessLogic.Services
         {
             Admin admin = await _adminRepository.GetById(id);
             return _mapper.Map<Admin, AdminDto>(admin);
+        }
+
+        public void AddAdmin(RegisterAdminUserDto adminDto)
+        {
+            Role role = _adminRepository.GetRoleByName(adminDto.Role);
+            if (role == null)
+            {
+                throw new ValidationException($"Role '{adminDto.Role}' does not exist!");
+            }
+            
+            Admin admin = _mapper.Map<RegisterAdminUserDto, Admin>(adminDto);
+            admin.RoleId = role.Id;
+            _adminRepository.AddAdmin(admin);
+        }
+
+        //TODO: Move to RoleService
+        public int GetRoleIdByName(string name)
+        {
+            return _adminRepository.GetRoleByName(name).Id;
         }
     }
 }

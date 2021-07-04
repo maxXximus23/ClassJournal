@@ -11,6 +11,8 @@ namespace ClassJournal.BusinessLogic.Mapping
             CreateMap<Role, RoleDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<Admin, AdminDto>().ReverseMap();
+            CreateMap<RegisterAdminUserDto, Admin>()
+                .ForMember(dto => dto.Role, expression => expression.Ignore());
         }
     }
 }

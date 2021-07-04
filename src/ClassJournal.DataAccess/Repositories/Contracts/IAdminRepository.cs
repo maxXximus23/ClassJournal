@@ -8,5 +8,9 @@ namespace ClassJournal.DataAccess.Repositories.Contracts
     {
         Task<IReadOnlyCollection<Admin>> GetAll();
         Task<Admin> GetById(int id);
+
+        void AddAdmin(Admin admin);
+
+        Role GetRoleByName(string name);
     }
 }

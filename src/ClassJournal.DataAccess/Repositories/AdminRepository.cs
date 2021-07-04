@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,6 +29,18 @@ namespace ClassJournal.DataAccess.Repositories
             return await _databaseContext.Admins.AsNoTracking()
                 .Include(admin => admin.Role)
                 .FirstOrDefaultAsync(admin => admin.Id == id);
+        }
+
+        public void AddAdmin(Admin admin)
+        {
+            _databaseContext.Admins.Add(admin);
+            _databaseContext.SaveChanges();
+        }
+
+        public Role GetRoleByName(string name)
+        {
+            return _databaseContext.Roles.AsNoTracking()
+                .FirstOrDefault(role => role.Name == name);
         }
     }
 }

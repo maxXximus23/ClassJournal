@@ -33,5 +33,12 @@ namespace ClassJournal.Web.Controllers
         {
             return _mapper.Map<AdminDto, AdminModel>(await _adminService.GetById(id));
         }
+        
+        [HttpPost("addadmin")]
+        public void AddAdmin([FromBody] RegisterAdminUserModel adminUser)
+        {
+            RegisterAdminUserDto adminDto = _mapper.Map<RegisterAdminUserModel, RegisterAdminUserDto>(adminUser);
+            _adminService.AddAdmin(adminDto);
+        }
     }
 }

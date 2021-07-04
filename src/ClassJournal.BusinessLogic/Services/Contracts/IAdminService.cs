@@ -9,5 +9,9 @@ namespace ClassJournal.BusinessLogic.Services.Contracts
         Task<IReadOnlyCollection<AdminDto>> GetAll();
 
         Task<AdminDto> GetById(int id);
+
+        void AddAdmin(RegisterAdminUserDto adminDto);
+
+        int GetRoleIdByName(string name);
     }
 }
