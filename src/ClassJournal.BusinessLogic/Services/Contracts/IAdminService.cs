@@ -6,7 +6,7 @@ namespace ClassJournal.BusinessLogic.Services.Contracts
 {
     public interface IAdminService
     {
-        Task<IReadOnlyCollection<AdminDto>> GetAll();
+        Task<IReadOnlyCollection<AdminDto>> GetAll(AdminParametersDto adminParameters);
 
         Task<AdminDto> GetById(int id);
 

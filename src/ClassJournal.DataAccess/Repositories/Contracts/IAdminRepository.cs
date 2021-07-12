@@ -6,7 +6,7 @@ namespace ClassJournal.DataAccess.Repositories.Contracts
 {
     public interface IAdminRepository
     {
-        Task<IReadOnlyCollection<Admin>> GetAll();
+        Task<IReadOnlyCollection<Admin>> GetAll(AdminParameters adminParameters);
         Task<Admin> GetById(int id);
 
         void AddAdmin(Admin admin);

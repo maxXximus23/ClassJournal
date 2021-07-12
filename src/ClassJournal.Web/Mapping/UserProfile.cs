@@ -13,6 +13,7 @@ namespace ClassJournal.Web.Mapping
             CreateMap<AdminDto, AdminModel>()
                 .ForMember(model => model.Role, expression => expression.MapFrom(dto => dto.Role.Name));
             CreateMap<RegisterAdminUserModel, RegisterAdminUserDto>();
+            CreateMap<AdminParametersDto, AdminParametersModel>().ReverseMap();
         }
     }
 }

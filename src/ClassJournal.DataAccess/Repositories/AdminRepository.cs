@@ -17,10 +17,12 @@ namespace ClassJournal.DataAccess.Repositories
             _databaseContext = databaseContext;
         }
         
-        public async Task<IReadOnlyCollection<Admin>> GetAll()
+        public async Task<IReadOnlyCollection<Admin>> GetAll(AdminParameters adminParameters)
         {
             return await _databaseContext.Admins.AsNoTracking()
                 .Include(admin => admin.Role)
+                .Skip((adminParameters.PageNumber - 1) * adminParameters.PageSize)
+                .Take(adminParameters.PageSize)
                 .ToArrayAsync();
         }
 

@@ -23,9 +23,11 @@ namespace ClassJournal.Web.Controllers
         }
         
         [HttpGet]
-        public async Task<IReadOnlyCollection<AdminModel>> GetAllAdmins()
+        public async Task<IActionResult> GetAllAdmins([FromQuery] AdminParametersModel adminParameters)
         {
-            return _mapper.MapCollection<AdminDto, AdminModel>(await _adminService.GetAll());
+            var admins = _mapper.MapCollection<AdminDto, AdminModel>(
+                await _adminService.GetAll(_mapper.Map<AdminParametersModel, AdminParametersDto>(adminParameters)));
+            return Ok(admins);
         }
         
         [HttpGet("{id}")]
