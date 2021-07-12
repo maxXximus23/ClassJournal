@@ -6,6 +6,7 @@ using ClassJournal.Dto.Users;
 using ClassJournal.Shared.Extensions;
 using ClassJournal.Web.Models.Users;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace ClassJournal.Web.Controllers
 {
@@ -25,8 +26,22 @@ namespace ClassJournal.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAdmins([FromQuery] AdminParametersModel adminParameters)
         {
-            var admins = _mapper.MapCollection<AdminDto, AdminModel>(
-                await _adminService.GetAll(_mapper.Map<AdminParametersModel, AdminParametersDto>(adminParameters)));
+            var adminsdata =
+                await _adminService.GetAll(_mapper.Map<AdminParametersModel, AdminParametersDto>(adminParameters));
+            
+            var admins = _mapper.MapCollection<AdminDto, AdminModel>(adminsdata);
+            
+            var metadata = new
+            {
+                adminsdata.TotalCount,
+                adminsdata.PageSize,
+                adminsdata.CurrentPage,
+                adminsdata.TotalPages,
+                adminsdata.HasNext,
+                adminsdata.HasPrevious
+            };
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+            
             return Ok(admins);
         }
         

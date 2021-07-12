@@ -23,11 +23,15 @@ namespace ClassJournal.BusinessLogic.Services
             _mapper = mapper;
         }
         
-        public async Task<IReadOnlyCollection<AdminDto>> GetAll(AdminParametersDto adminParametersDto)
+        public async Task<PagedList<AdminDto>> GetAll(AdminParametersDto adminParametersDto)
         {
             IReadOnlyCollection<Admin> admins = await _adminRepository.GetAll(
                 _mapper.Map<AdminParametersDto, AdminParameters>(adminParametersDto));
-            return _mapper.MapCollection<Admin, AdminDto>(admins);
+
+            return PagedList<AdminDto>.ToPagedList(
+                _mapper.MapCollection<Admin, AdminDto>(admins), 
+                adminParametersDto.PageNumber,
+                adminParametersDto.PageSize);
         }
 
         public async Task<AdminDto> GetById(int id)
