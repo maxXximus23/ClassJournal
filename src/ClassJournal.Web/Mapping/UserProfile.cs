@@ -1,5 +1,8 @@
 using AutoMapper;
+using ClassJournal.Domain.Auth;
+using ClassJournal.Dto.Requests;
 using ClassJournal.Dto.Users;
+using ClassJournal.Web.Models.Requests;
 using ClassJournal.Web.Models.Users;
 
 namespace ClassJournal.Web.Mapping
@@ -13,7 +16,8 @@ namespace ClassJournal.Web.Mapping
             CreateMap<AdminDto, AdminModel>()
                 .ForMember(model => model.Role, expression => expression.MapFrom(dto => dto.Role.Name));
             CreateMap<RegisterAdminUserModel, RegisterAdminUserDto>();
-            CreateMap<AdminParametersDto, AdminParametersModel>().ReverseMap();
+            CreateMap<PagingDto, PagingModel>().ReverseMap();
+            CreateMap<PagingResultDto<AdminDto>, PagingResultModel<Admin>>();
         }
     }
 }

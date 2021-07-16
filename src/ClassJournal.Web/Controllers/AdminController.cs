@@ -2,8 +2,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using ClassJournal.BusinessLogic.Services.Contracts;
+using ClassJournal.Domain.Auth;
+using ClassJournal.Dto.Requests;
 using ClassJournal.Dto.Users;
 using ClassJournal.Shared.Extensions;
+using ClassJournal.Web.Models.Requests;
 using ClassJournal.Web.Models.Users;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -24,25 +27,14 @@ namespace ClassJournal.Web.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetAllAdmins([FromQuery] AdminParametersModel adminParameters)
+        public async Task<PagingResultModel<Admin>> GetAllAdmins([FromQuery] PagingModel pagingModel)
         {
-            var adminsdata =
-                await _adminService.GetAll(_mapper.Map<AdminParametersModel, AdminParametersDto>(adminParameters));
+            var pagingDto = _mapper.Map<PagingModel, PagingDto>(pagingModel);
+
+            PagingResultDto<AdminDto> pagingResultDto =
+                await _adminService.GetAll(pagingDto);
             
-            var admins = _mapper.MapCollection<AdminDto, AdminModel>(adminsdata);
-            
-            var metadata = new
-            {
-                adminsdata.TotalCount,
-                adminsdata.PageSize,
-                adminsdata.CurrentPage,
-                adminsdata.TotalPages,
-                adminsdata.HasNext,
-                adminsdata.HasPrevious
-            };
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
-            
-            return Ok(admins);
+            return _mapper.Map<PagingResultDto<AdminDto>, PagingResultModel<Admin>>(pagingResultDto);
         }
         
         [HttpGet("{id}")]

@@ -7,6 +7,7 @@ using ClassJournal.BusinessLogic.Mapping;
 using ClassJournal.BusinessLogic.Services.Contracts;
 using ClassJournal.DataAccess.Repositories.Contracts;
 using ClassJournal.Domain.Auth;
+using ClassJournal.Dto.Requests;
 using ClassJournal.Dto.Users;
 using ClassJournal.Shared.Extensions;
 
@@ -23,15 +24,15 @@ namespace ClassJournal.BusinessLogic.Services
             _mapper = mapper;
         }
         
-        public async Task<PagedList<AdminDto>> GetAll(AdminParametersDto adminParametersDto)
+        public async Task<PagingResultDto<AdminDto>> GetAll(PagingDto pagingDto)
         {
-            IReadOnlyCollection<Admin> admins = await _adminRepository.GetAll(
-                _mapper.Map<AdminParametersDto, AdminParameters>(adminParametersDto));
+            IReadOnlyCollection<Admin> admins = await _adminRepository.GetAll(pagingDto);
 
-            return PagedList<AdminDto>.ToPagedList(
-                _mapper.MapCollection<Admin, AdminDto>(admins), 
-                adminParametersDto.PageNumber,
-                adminParametersDto.PageSize);
+            return new PagingResultDto<AdminDto>()
+            {
+                Items = _mapper.MapCollection<Admin, AdminDto>(admins),
+                TotalCount = await _adminRepository.Count()
+            };
         }
 
         public async Task<AdminDto> GetById(int id)

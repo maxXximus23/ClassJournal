@@ -13,7 +13,6 @@ namespace ClassJournal.BusinessLogic.Mapping
             CreateMap<Admin, AdminDto>().ReverseMap();
             CreateMap<RegisterAdminUserDto, Admin>()
                 .ForMember(dto => dto.Role, expression => expression.Ignore());
-            CreateMap<AdminParameters, AdminParametersDto>().ReverseMap();
         }
     }
 }

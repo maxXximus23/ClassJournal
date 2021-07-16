@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using ClassJournal.DataAccess.Repositories.Contracts;
 using ClassJournal.Domain.Auth;
+using ClassJournal.Dto.Requests;
+using ClassJournal.Dto.Users;
+using ClassJournal.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClassJournal.DataAccess.Repositories
@@ -17,12 +20,11 @@ namespace ClassJournal.DataAccess.Repositories
             _databaseContext = databaseContext;
         }
         
-        public async Task<IReadOnlyCollection<Admin>> GetAll(AdminParameters adminParameters)
+        public async Task<IReadOnlyCollection<Admin>> GetAll(PagingDto pagingDto)
         {
             return await _databaseContext.Admins.AsNoTracking()
                 .Include(admin => admin.Role)
-                .Skip((adminParameters.PageNumber - 1) * adminParameters.PageSize)
-                .Take(adminParameters.PageSize)
+                .Limit(pagingDto)
                 .ToArrayAsync();
         }
 
@@ -43,6 +45,13 @@ namespace ClassJournal.DataAccess.Repositories
         {
             return _databaseContext.Roles.AsNoTracking()
                 .FirstOrDefault(role => role.Name == name);
+        }
+        
+        public async Task<int> Count()
+        {
+            return await _databaseContext.Admins
+                .AsNoTracking()
+                .CountAsync();
         }
     }
 }
