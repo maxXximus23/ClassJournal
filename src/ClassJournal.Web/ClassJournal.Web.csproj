@@ -18,6 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ClassJournal.Api\ClassJournal.Api.csproj" />
       <ProjectReference Include="..\ClassJournal.BusinessLogic\ClassJournal.BusinessLogic.csproj" />
       <ProjectReference Include="..\ClassJournal.DataAccess\ClassJournal.DataAccess.csproj" />
     </ItemGroup>

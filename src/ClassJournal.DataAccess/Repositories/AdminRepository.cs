@@ -1,12 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ClassJournal.DataAccess.Extensions;
 using ClassJournal.DataAccess.Repositories.Contracts;
 using ClassJournal.Domain.Auth;
 using ClassJournal.Dto.Requests;
-using ClassJournal.Dto.Users;
-using ClassJournal.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClassJournal.DataAccess.Repositories
@@ -22,7 +20,8 @@ namespace ClassJournal.DataAccess.Repositories
         
         public async Task<IReadOnlyCollection<Admin>> GetAll(PagingDto pagingDto)
         {
-            return await _databaseContext.Admins.AsNoTracking()
+            return await _databaseContext.Admins
+                .AsNoTracking()
                 .Include(admin => admin.Role)
                 .Limit(pagingDto)
                 .ToArrayAsync();
@@ -30,7 +29,8 @@ namespace ClassJournal.DataAccess.Repositories
 
         public async Task<Admin> GetById(int id)
         {
-            return await _databaseContext.Admins.AsNoTracking()
+            return await _databaseContext.Admins
+                .AsNoTracking()
                 .Include(admin => admin.Role)
                 .FirstOrDefaultAsync(admin => admin.Id == id);
         }
@@ -43,7 +43,8 @@ namespace ClassJournal.DataAccess.Repositories
 
         public Role GetRoleByName(string name)
         {
-            return _databaseContext.Roles.AsNoTracking()
+            return _databaseContext.Roles
+                .AsNoTracking()
                 .FirstOrDefault(role => role.Name == name);
         }
         

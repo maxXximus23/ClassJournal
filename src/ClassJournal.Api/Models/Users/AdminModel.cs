@@ -1,4 +1,4 @@
-namespace ClassJournal.Web.Models.Users
+namespace ClassJournal.Api.Models.Users
 {
     public class AdminModel : UserModel
     {

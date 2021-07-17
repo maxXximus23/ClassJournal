@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ClassJournal.Web.Models.Requests
+namespace ClassJournal.Api.Models.Requests
 {
     public class PagingResultModel<TApiModel>
     {

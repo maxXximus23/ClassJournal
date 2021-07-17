@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ClassJournal.Domain.Auth;
 using ClassJournal.Dto.Requests;
-using ClassJournal.Dto.Users;
 
 namespace ClassJournal.DataAccess.Repositories.Contracts
 {

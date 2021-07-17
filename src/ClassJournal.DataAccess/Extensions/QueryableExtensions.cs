@@ -1,8 +1,7 @@
 using System.Linq;
 using ClassJournal.Dto.Requests;
-using ClassJournal.Dto.Users;
 
-namespace ClassJournal.Shared.Extensions
+namespace ClassJournal.DataAccess.Extensions
 {
     public static class QueryableExtensions
     {

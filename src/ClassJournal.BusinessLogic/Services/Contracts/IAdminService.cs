@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using ClassJournal.Dto.Requests;
 using ClassJournal.Dto.Users;
-using ClassJournal.Shared.Extensions;
 
 namespace ClassJournal.BusinessLogic.Services.Contracts
 {

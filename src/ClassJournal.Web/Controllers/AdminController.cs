@@ -1,15 +1,11 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using ClassJournal.Api.Models.Requests;
+using ClassJournal.Api.Models.Users;
 using ClassJournal.BusinessLogic.Services.Contracts;
-using ClassJournal.Domain.Auth;
 using ClassJournal.Dto.Requests;
 using ClassJournal.Dto.Users;
-using ClassJournal.Shared.Extensions;
-using ClassJournal.Web.Models.Requests;
-using ClassJournal.Web.Models.Users;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace ClassJournal.Web.Controllers
 {
@@ -27,14 +23,13 @@ namespace ClassJournal.Web.Controllers
         }
         
         [HttpGet]
-        public async Task<PagingResultModel<Admin>> GetAllAdmins([FromQuery] PagingModel pagingModel)
+        public async Task<PagingResultModel<AdminModel>> GetAllAdmins([FromQuery] PagingModel pagingModel)
         {
             var pagingDto = _mapper.Map<PagingModel, PagingDto>(pagingModel);
 
-            PagingResultDto<AdminDto> pagingResultDto =
-                await _adminService.GetAll(pagingDto);
+            PagingResultDto<AdminDto> pagingResultDto = await _adminService.GetAll(pagingDto);
             
-            return _mapper.Map<PagingResultDto<AdminDto>, PagingResultModel<Admin>>(pagingResultDto);
+            return _mapper.Map<PagingResultDto<AdminDto>, PagingResultModel<AdminModel>>(pagingResultDto);
         }
         
         [HttpGet("{id}")]
@@ -43,7 +38,7 @@ namespace ClassJournal.Web.Controllers
             return _mapper.Map<AdminDto, AdminModel>(await _adminService.GetById(id));
         }
         
-        [HttpPost("addadmin")]
+        [HttpPost]
         public void AddAdmin([FromBody] RegisterAdminUserModel adminUser)
         {
             RegisterAdminUserDto adminDto = _mapper.Map<RegisterAdminUserModel, RegisterAdminUserDto>(adminUser);
