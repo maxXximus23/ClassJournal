@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,19 +36,18 @@ namespace ClassJournal.DataAccess.Repositories
                 .FirstOrDefaultAsync(admin => admin.Id == id);
         }
 
+        public void Remove(Admin admin)
+        {
+            _databaseContext.Admins.Remove(admin);
+            _databaseContext.SaveChanges();
+        }
+
         public void AddAdmin(Admin admin)
         {
             _databaseContext.Admins.Add(admin);
             _databaseContext.SaveChanges();
         }
 
-        public Role GetRoleByName(string name)
-        {
-            return _databaseContext.Roles
-                .AsNoTracking()
-                .FirstOrDefault(role => role.Name == name);
-        }
-        
         public async Task<int> Count()
         {
             return await _databaseContext.Admins

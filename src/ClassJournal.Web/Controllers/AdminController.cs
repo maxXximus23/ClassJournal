@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using ClassJournal.Api.Models.Requests;
@@ -36,6 +37,21 @@ namespace ClassJournal.Web.Controllers
         public async Task<AdminModel> GetAdminById([FromRoute] int id)
         {
             return _mapper.Map<AdminDto, AdminModel>(await _adminService.GetById(id));
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteAdminById([FromRoute] int id)
+        {
+            try
+            {
+                _adminService.DeleteById(id);
+            }
+            catch (Exception exception)
+            {
+                return NotFound(exception.Message);
+            }
+
+            return Ok();
         }
         
         [HttpPost]

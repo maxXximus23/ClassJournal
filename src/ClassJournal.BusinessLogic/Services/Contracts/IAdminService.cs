@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using ClassJournal.Domain.Auth;
 using ClassJournal.Dto.Requests;
 using ClassJournal.Dto.Users;
 
@@ -10,8 +11,8 @@ namespace ClassJournal.BusinessLogic.Services.Contracts
 
         Task<AdminDto> GetById(int id);
 
-        void AddAdmin(RegisterAdminUserDto adminDto);
+        void DeleteById(int id);
 
-        int GetRoleIdByName(string name);
+        void AddAdmin(RegisterAdminUserDto adminDto);
     }
 }

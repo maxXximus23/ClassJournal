@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using ClassJournal.BusinessLogic.Mapping;
@@ -16,11 +17,13 @@ namespace ClassJournal.BusinessLogic.Services
     public class AdminService : IAdminService
     {
         private readonly IAdminRepository _adminRepository;
+        private readonly IRoleRepository _roleRepository;
         private readonly IMapper _mapper;
 
-        public AdminService(IAdminRepository repository, IMapper mapper)
+        public AdminService(IAdminRepository adminRepository, IRoleRepository roleRepository, IMapper mapper)
         {
-            _adminRepository = repository;
+            _adminRepository = adminRepository;
+            _roleRepository = roleRepository;
             _mapper = mapper;
         }
         
@@ -41,9 +44,18 @@ namespace ClassJournal.BusinessLogic.Services
             return _mapper.Map<Admin, AdminDto>(admin);
         }
 
+        public void DeleteById(int id)
+        {
+            AdminDto adminDto = GetById(id).Result;
+            if (adminDto == null)
+                throw new KeyNotFoundException($"Admin with id {id} has not found!");
+            
+            _adminRepository.Remove(_mapper.Map<AdminDto, Admin>(adminDto));
+        }
+
         public void AddAdmin(RegisterAdminUserDto adminDto)
         {
-            Role role = _adminRepository.GetRoleByName(adminDto.Role);
+            Role role = _roleRepository.GetRoleByName(adminDto.Role);
             if (role == null)
             {
                 throw new ValidationException($"Role '{adminDto.Role}' does not exist!");
@@ -52,12 +64,6 @@ namespace ClassJournal.BusinessLogic.Services
             Admin admin = _mapper.Map<RegisterAdminUserDto, Admin>(adminDto);
             admin.RoleId = role.Id;
             _adminRepository.AddAdmin(admin);
-        }
-
-        //TODO: Move to RoleService
-        public int GetRoleIdByName(string name)
-        {
-            return _adminRepository.GetRoleByName(name).Id;
         }
     }
 }

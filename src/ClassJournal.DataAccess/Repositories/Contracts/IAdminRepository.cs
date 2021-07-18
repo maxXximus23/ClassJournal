@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ClassJournal.Domain.Auth;
@@ -10,10 +11,10 @@ namespace ClassJournal.DataAccess.Repositories.Contracts
         Task<IReadOnlyCollection<Admin>> GetAll(PagingDto pagingDto);
         Task<Admin> GetById(int id);
 
+        void Remove(Admin admin);
+
         Task<int> Count();
 
         void AddAdmin(Admin admin);
-
-        Role GetRoleByName(string name);
     }
 }

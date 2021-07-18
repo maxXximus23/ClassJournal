@@ -35,7 +35,9 @@ namespace ClassJournal.Web
                     config => { config.MigrationsAssembly("ClassJournal.DataAccess");}));
 
             services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<IRoleService, RoleService>();
             services.AddAutoMapper(config => config.AddMaps(typeof(BusinessLogic.Mapping.UsersProfile).Assembly,
                 typeof(Web.Mapping.UserProfile).Assembly));
             
